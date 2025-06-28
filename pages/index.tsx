@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef, FormEvent } from "react";
+import Image from "next/image"; // ✅ Imported for Next.js optimization
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     webkitSpeechRecognition: any;
   }
 }
@@ -16,6 +19,8 @@ export default function PersonalizedLearningAssistant() {
   const [history, setHistory] = useState<string[]>([]);
   const [subject, setSubject] = useState("");
   const [revisionPlan, setRevisionPlan] = useState<string>("");
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
@@ -25,6 +30,7 @@ export default function PersonalizedLearningAssistant() {
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
       recognitionRef.current.lang = 'en-US';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       recognitionRef.current.onresult = (event: any) => {
         setInput(event.results[0][0].transcript);
       };
@@ -116,7 +122,14 @@ export default function PersonalizedLearningAssistant() {
     <div className="min-h-screen bg-gradient-to-r from-blue-600 to-purple-700 flex flex-col items-center justify-center p-4 text-white">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-8 animate-fadeIn">
-          <img src="OIP.jpg" alt="AI assistant icon" className="mx-auto mb-4 rounded-full border-4 border-white shadow-lg" />
+          {/* ✅ Updated from <img> to <Image /> */}
+          <Image
+            src="/OIP.jpg"
+            alt="AI assistant icon"
+            width={100}
+            height={100}
+            className="mx-auto mb-4 rounded-full border-4 border-white shadow-lg"
+          />
           <h1 className="text-4xl font-bold text-white mb-2">Personalized Learning Assistant</h1>
           <p className="text-lg text-blue-100">Your AI companion for customized education</p>
         </div>
